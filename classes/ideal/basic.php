@@ -16,7 +16,7 @@
  *
  * The original code doesn't contain any license information, but the text on the
  * website (http://www.ideal-simulator.nl/ideal-scripts-en-plugins-algemeen.html)
- * indicates the code is free to use by anyone.
+ * indicates the code is free to be used by anyone.
  */
 
 namespace Ideal;
@@ -44,68 +44,7 @@ class Ideal_Basic
 	}
 
 	/**
-	 * Get or set the amount to be paid
-	 *
-	 * @param	mixed	amount for this transaction (integer or float)
-	 * @return	void
-	 */
-	public function amount($amount)
-	{
-		// check if a valid amount is passed?
-		if (is_numeric($amount) and $amount > 0)
-		{
-			$this->config['amount'] = $amount;
-		}
-		else
-		{
-			throw new IdealException('Invalid amount passed. The amount must be numeric and larger than zero');
-		}
-	}
-
-	/**
-	 * Get or set the transaction description
-	 *
-	 * @param	string	text for the transaction. max 32 characters
-	 * @return	void
-	 */
-	public function description($description)
-	{
-		// check if a valid amount is passed?
-		if (is_string($amount) and strlen($description) > 0 and strlen($description) < 33)
-		{
-			$this->config['description'] = $description;
-		}
-		else
-		{
-			throw new IdealException('Invalid description passed. The description must be a string and maximum 32 characters');
-		}
-
-		return $this->config['description'];
-	}
-
-	/**
-	 * Get or set the transaction reference
-	 *
-	 * @param	string	text for the transaction. max 16 characters
-	 * @return	void
-	 */
-	public function reference($reference)
-	{
-		// check if a valid amount is passed?
-		if (is_string($reference) and strlen($reference) > 0 and strlen($reference) < 17)
-		{
-			$this->config['reference'] = $reference;
-		}
-		else
-		{
-			throw new IdealException('Invalid reference passed. The transaction reference must be a string and maximum 16 characters');
-		}
-
-		return $this->config['reference'];
-	}
-
-	/**
-	 * Create the fieldset for the transactio form
+	 * Create the fieldset for the transaction form
 	 *
 	 * @param	mixed	Fieldset, or null to create one
 	 * @return	void
@@ -176,107 +115,127 @@ class Ideal_Basic
 		return $fieldset;
 	}
 
+	// -------------------------------------------------------------------------
+	// getters and setters
+	// -------------------------------------------------------------------------
+
+	/**
+	 * set the amount to be paid
+	 *
+	 * @param	mixed	amount for this transaction (integer or float)
+	 * @return	void
+	 */
+	public function set_amount($amount)
+	{
+		// check if a valid amount is passed?
+		if (is_numeric($amount) and $amount > 0)
+		{
+			$this->config['amount'] = round($amount * 100);
+		}
+		else
+		{
+			throw new IdealException('Invalid amount passed. The amount must be numeric and larger than zero');
+		}
+	}
+
+	/**
+	 * set the transaction description
+	 *
+	 * @param	string	text for the transaction. max 32 characters
+	 * @return	void
+	 */
+	public function set_description($description)
+	{
+		// check if a valid description is passed?
+		if (is_string($description) and strlen($description) > 0 and strlen($description) < 33)
+		{
+			$this->config['description'] = $description;
+		}
+		else
+		{
+			throw new IdealException('Invalid description passed. The description must be a string and maximum 32 characters');
+		}
+	}
+
+	/**
+	 * set the transaction reference
+	 *
+	 * @param	string	text for the transaction. max 16 characters
+	 * @return	void
+	 */
+	public function set_reference($reference)
+	{
+		// check if a valid reference is passed?
+		if (is_string($reference) and strlen($reference) > 0 and strlen($reference) < 17)
+		{
+			$this->config['reference'] = $reference;
+		}
+		else
+		{
+			throw new IdealException('Invalid reference passed. The transaction reference must be a string and maximum 16 characters');
+		}
+	}
+
 	/**
 	 * get or set the merchant id and sub id
 	 *
-	 * note that since this is part of the configuration, there should be no need
-	 * to call this method. it is here for completeness
-	 *
 	 * @param	mixed	merchant id
-	 * @param	mixed	sub id
-	 * @return	array
+	 * @param	mixed	sub id, optional. if not given, defaults to '0'
+	 * @return	void
 	 */
-	public function merchant($merchantid = null, $subid = '0')
+	public function set_merchant($merchantid, $subid = '0')
 	{
-		// check if there any parameters passed?
-		if (func_num_args() > 0 and ! is_null($merchantid))
-		{
-			$this->config['merchant_id'] = $merchantid;
-			$this->config['sub_id'] = $subid;
-		}
-
-		return array('merchant_id' => $this->config['merchant_id'], 'sub_id' => $this->config['sub_id']);
+		$this->config['merchant_id'] = $merchantid;
+		$this->config['sub_id'] = $subid;
 	}
 
 	/**
 	 * get or set the hash key
 	 *
-	 * note that since this is part of the configuration, there should be no need
-	 * to call this method. it is here for completeness
-	 *
 	 * @param	string	hashkey
-	 * @return	string
+	 * @return	void
 	 */
-	public function hashkey($hashkey = null)
+	public function set_hashkey($hashkey)
 	{
-		// check if there any parameters passed?
-		if (func_num_args() > 0 and ! is_null($hashkey))
-		{
-			$this->config['bank']['basic']['hashkey'] = $hashkey;
-		}
-
-		return $this->config['bank']['basic']['hashkey'];
+		$this->config['bank']['basic']['hashkey'] = $hashkey;
 	}
 
 	/**
 	 * get or set the cancel url
 	 *
-	 * note that since this is part of the configuration, there should be no need
-	 * to call this method. it is here for completeness
-	 *
 	 * @param	string	url
-	 * @return	string
+	 * @return	void
 	 */
-	public function cancel_url($url = null)
+	public function set_cancel_url($url)
 	{
-		// check if there any parameters passed?
-		if (func_num_args() > 0 and ! is_null($url))
-		{
-			$this->config['cancel_url'] = $url;
-		}
-
 		return $this->config['cancel_url'];
 	}
 
 	/**
-	 * get or set the success url
-	 *
-	 * note that since this is part of the configuration, there should be no need
-	 * to call this method. it is here for completeness
+	 * set the success url
 	 *
 	 * @param	string	url
-	 * @return	string
+	 * @return	void
 	 */
-	public function success_url($url = null)
+	public function set_success_url($url)
 	{
-		// check if there any parameters passed?
-		if (func_num_args() > 0 and ! is_null($url))
-		{
-			$this->config['success_url'] = $url;
-		}
-
-		return $this->config['success_url'];
+		$this->config['success_url'] = $url;
 	}
 
 	/**
 	 * get or set the error url
 	 *
-	 * note that since this is part of the configuration, there should be no need
-	 * to call this method. it is here for completeness
-	 *
 	 * @param	string	url
-	 * @return	string
+	 * @return	void
 	 */
-	public function error_url($url = null)
+	public function set_error_url($url)
 	{
-		// check if there any parameters passed?
-		if (func_num_args() > 0 and ! is_null($url))
-		{
-			$this->config['error_url'] = $url;
-		}
-
-		return $this->config['error_url'];
+		$this->config['error_url'] = $url;
 	}
+
+	// -------------------------------------------------------------------------
+	// internal methods
+	// -------------------------------------------------------------------------
 
 	/**
 	 * validate the configuration passed
@@ -284,7 +243,7 @@ class Ideal_Basic
 	 * @param	array	configuration array
 	 * @return	string
 	 */
-	public function validate($config)
+	protected function validate($config)
 	{
 		// force the language to NL
 		$config['language'] = 'NL';

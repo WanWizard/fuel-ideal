@@ -22,17 +22,22 @@
 return array(
 
 	/**
+	 * Does this provider support multi-line data?
+	 */
+	'multiline'          => true,
+
+	/**
 	 * Configuration for basic services
 	 */
 	'basic' => array(
 
 		/**
-		 * URL to access the simulator basic iDEAL service (production mode)
+		 * URL to access the ING bank basic iDEAL service (production mode)
 		 */
 		'url'            => 'https://ideal.secure-ing.com/ideal/mpiPayInitIng.do',
 
 		/**
-		 * URL to access the simulator basic iDEAL service (test mode)
+		 * URL to access the ING bank basic iDEAL service (test mode)
 		 */
 		'testurl'        => 'https://idealtest.secure-ing.com/ideal/mpiPayInitIng.do',
 
@@ -48,9 +53,43 @@ return array(
 	'professional' => array(
 
 		/**
-		 * URL to access the ING Bank professional iDEAL service
+		 * URLs to access the ING bank professional iDEAL service
 		 */
-		'url'            => '',
+		'issuer'            => array(
+			/**
+			 * URL to access the ING bank professional iDEAL service (production mode)
+			 */
+			'url'            => 'ssl://ideal.secure-ing.com:443/ideal/iDeal',
+
+			/**
+			 * URL to access the ING bank professional iDEAL service (test mode)
+			 */
+			'testurl'        => 'ssl://idealtest.secure-ing.com:443/ideal/iDeal',
+		),
+
+		'transaction'        => array(
+			/**
+			 * URL to access the ING bank professional iDEAL service (production mode)
+			 */
+			'url'            => 'ssl://ideal.secure-ing.com:443/ideal/iDeal',
+
+			/**
+			 * URL to access the ING bank professional iDEAL service (test mode)
+			 */
+			'testurl'        => 'ssl://idealtest.secure-ing.com:443/ideal/iDeal',
+		),
+
+		'status'            => array(
+			/**
+			 * URL to access the ING bank professional iDEAL service (production mode)
+			 */
+			'url'            => 'ssl://ideal.secure-ing.com:443/ideal/iDeal',
+
+			/**
+			 * URL to access the ING bank professional iDEAL service (test mode)
+			 */
+			'testurl'        => 'ssl://idealtest.secure-ing.com:443/ideal/iDeal',
+		),
 
 		/**
 		 * Your private certificate passphrase

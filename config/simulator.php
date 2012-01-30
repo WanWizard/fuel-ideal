@@ -18,6 +18,11 @@
 return array(
 
 	/**
+	 * Does this provider support multi-line data?
+	 */
+	'multiline'          => true,
+
+	/**
 	 * Configuration for basic services
 	 */
 	'basic' => array(
@@ -44,9 +49,43 @@ return array(
 	'professional' => array(
 
 		/**
-		 * URL to access the simulator professional iDEAL service
+		 * URLs to access the Simulator professional iDEAL service
 		 */
-		'url'            => 'https://www.ideal-simulator.nl/professional/',
+		'issuer'            => array(
+			/**
+			 * URL to access the Simulator professional iDEAL service (production mode)
+			 */
+			'url'            => 'ssl://www.ideal-simulator.nl:443/professional',
+
+			/**
+			 * URL to access the Simulator professional iDEAL service (test mode)
+			 */
+			'testurl'        => 'ssl://www.ideal-simulator.nl:443/professional/',
+		),
+
+		'transaction'        => array(
+			/**
+			 * URL to access the Simulator professional iDEAL service (production mode)
+			 */
+			'url'            => 'ssl://www.ideal-simulator.nl:443/professional/',
+
+			/**
+			 * URL to access the Simulator professional iDEAL service (test mode)
+			 */
+			'testurl'        => 'ssl://www.ideal-simulator.nl:443/professional/',
+		),
+
+		'status'            => array(
+			/**
+			 * URL to access the Simulator professional iDEAL service (production mode)
+			 */
+			'url'            => 'ssl://www.ideal-simulator.nl:443/professional/',
+
+			/**
+			 * URL to access the Simulator professional iDEAL service (test mode)
+			 */
+			'testurl'        => 'ssl://www.ideal-simulator.nl:443/professional/',
+		),
 
 		/**
 		 * Your private certificate passphrase
@@ -54,14 +93,14 @@ return array(
 		'passphrase'     => 'Password',
 
 		/**
-		 * Your private certificate key (the simulator uses their own private key!)
+		 * Your private certificate key (the simulator uses its own private key!)
 		 */
-		'private_key'    => 'certificates'.DS.'private'.DS.'simulator.key',
+		'private_key'    => 'certificates'.DS.'simulator'.DS.'private.key',
 
 		/**
-		 * Your private certificate (the simulator uses their own private cert!)
+		 * Your private certificate (the simulator uses its own private cert!)
 		 */
-		'private_cert'   => 'certificates'.DS.'private'.DS.'simulator.cer',
+		'private_cert'   => 'certificates'.DS.'simulator'.DS.'private.cer',
 
 		/**
 		 * Public certificate issued by your iDEAL service provider

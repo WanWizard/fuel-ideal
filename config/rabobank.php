@@ -22,17 +22,22 @@
 return array(
 
 	/**
+	 * Does this provider support multi-line data?
+	 */
+	'multiline'          => true,
+
+	/**
 	 * Configuration for basic services
 	 */
 	'basic' => array(
 
 		/**
-		 * URL to access the simulator basic iDEAL service (production mode)
+		 * URL to access the Rabobank basic iDEAL service (production mode)
 		 */
 		'url'            => 'https://ideal.rabobank.nl/ideal/mpiPayInitRabo.do',
 
 		/**
-		 * URL to access the simulator basic iDEAL service (test mode)
+		 * URL to access the Rabobank basic iDEAL service (test mode)
 		 */
 		'testurl'        => 'https://idealtest.rabobank.nl/ideal/mpiPayInitRabo.do',
 
@@ -48,9 +53,43 @@ return array(
 	'professional' => array(
 
 		/**
-		 * URL to access the Rabobank professional iDEAL service
+		 * URLs to access the Rabobank professional iDEAL service
 		 */
-		'url'            => '',
+		'issuer'            => array(
+			/**
+			 * URL to access the Rabobank professional iDEAL service (production mode)
+			 */
+			'url'            => 'ssl://ideal.rabobank.nl:443/ideal/iDeal',
+
+			/**
+			 * URL to access the Rabobank professional iDEAL service (test mode)
+			 */
+			'testurl'        => 'ssl://idealtest.rabobank.nl:443/ideal/iDeal',
+		),
+
+		'transaction'        => array(
+			/**
+			 * URL to access the Rabobank professional iDEAL service (production mode)
+			 */
+			'url'            => 'ssl://ideal.rabobank.nl:443/ideal/iDeal',
+
+			/**
+			 * URL to access the Rabobank professional iDEAL service (test mode)
+			 */
+			'testurl'        => 'ssl://idealtest.rabobank.nl:443/ideal/iDeal',
+		),
+
+		'status'            => array(
+			/**
+			 * URL to access the Rabobank professional iDEAL service (production mode)
+			 */
+			'url'            => 'ssl://ideal.rabobank.nl:443/ideal/iDeal',
+
+			/**
+			 * URL to access the Rabobank professional iDEAL service (test mode)
+			 */
+			'testurl'        => 'ssl://idealtest.rabobank.nl:443/ideal/iDeal',
+		),
 
 		/**
 		 * Your private certificate passphrase

@@ -12,7 +12,7 @@
 
 
 Autoloader::add_classes(array(
-	'Ideal\\Ideal'                      => __DIR__.'/classes/ideal.php',
-	'Ideal\\Ideal_Basic'                => __DIR__.'/classes/ideal/basic.php',
-	'Ideal\\Ideal_Professional'         => __DIR__.'/classes/ideal/professional.php',
+	'Ideal\\Ideal'                             => __DIR__.DS.'classes'.DS.'ideal.php',
+	'Ideal\\Ideal_Basic'                       => __DIR__.DS.'classes'.DS.'ideal'.DS.'basic.php',
+	'Ideal\\Ideal_Professional'                => __DIR__.DS.'classes'.DS.'ideal'.DS.'professional.php',
 ));

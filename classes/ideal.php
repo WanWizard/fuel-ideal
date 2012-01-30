@@ -21,7 +21,15 @@
 
 namespace Ideal;
 
+/**
+ * generic Ideal exception used throughout this package
+ */
 class IdealException extends \FuelException {};
+
+/**
+ * make sure we have a linefeed constant
+ */
+defined('LF') or define('LF', chr(10));
 
 /**
  * Ideal
@@ -37,7 +45,7 @@ class Ideal
 	protected static $instance = null;
 
 	/**
-	 * Create an iDEAL instance
+	 * create the iDEAL singleton instance
 	 */
 	public static function instance(Array $config = array())
 	{
@@ -58,14 +66,16 @@ class Ideal
 			// determine the driver to load
 			$driver = '\\Ideal\\Ideal_'.ucfirst($config['service']);
 
+			// create the instance
 			static::$instance = new $driver($config);
 		}
 
+		// return the singleton
 		return static::$instance;
 	}
 
 	/**
-	 * Validate the configuration, add defaults if needed
+	 * validate the configuration, add defaults if needed
 	 */
 	protected static function validate(Array $config = array())
 	{
@@ -74,7 +84,11 @@ class Ideal
 		{
 			throw new IdealException('No bank defined in the iDEAL configuration file');
 		}
-		elseif ( ! in_array($config['bank'], array('rabo', 'abnamro', 'ing', 'simulator')))
+		else
+		{
+			$config['bank'] = strtolower($config['bank']);
+		}
+		if ( ! in_array($config['bank'], array('rabo', 'abnamro', 'ing', 'simulator')))
 		{
 			throw new IdealException('The "'.$config['bank'].'" bank defined in the iDEAL configuration file is not supported (yet)');
 		}
@@ -84,11 +98,17 @@ class Ideal
 		{
 			throw new IdealException('No service type defined in the iDEAL configuration file');
 		}
-		elseif ( ! in_array($config['service'], array('basic', 'professional')))
+		else
+		{
+			$config['service'] = strtolower($config['service']);
+		}
+
+		if ( ! in_array($config['service'], array('basic', 'professional')))
 		{
 			throw new IdealException('The "'.$config['service'].'" service defined in the iDEAL configuration file is not supported. Use either "basic" or "professional"');
 		}
 
+		// return the config
 		return $config;
 	}
 
