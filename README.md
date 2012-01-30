@@ -1,6 +1,6 @@
-## DISCLAIMER
+## disclaimer
 
-As of now, this package has only been used against the simulator. Do **NOT** use in the _develop_ branch in a production environment!
+As of now, this package has only been used against the simulator. Do **NOT** use the _develop_ branch in a production environment!
 
 # Ideal
 
@@ -88,23 +88,23 @@ Professional services provides a full transaction interface. Transactions are pr
 At any time you can request the status of a transaction using the assigned transaction id. The status returned includes detailed information
 about the transaction, including basic account information of the user.
 
-## public function get_issuers()
+### public function get_issuers()
 
 Retrieves a list of issuers supported by the bank's acquirer service. Returns an associative array with bank ID's and names. You need the
 ID of the bank selected by the user to prepare the transaction.
 
-## public function transaction_prepare()
+### public function transaction_prepare()
 
 Prepares the transaction and sets it to the bank. You need to set all required fields (issuer, amount, description, and reference) before calling this method.
 If the preparation was a success, this method returns the assigned transaction ID. You need to store this to be able to request status updates for this
 transaction.
 
-## public function transaction_execute()
+### public function transaction_execute()
 
 Redirects to the bank to allow the user to finish the prepared transaction. After the transaction is complete the bank redirects back to your application
 using the **return_url** set.
 
-## public function transaction_status($transaction_id)
+### public function transaction_status($transaction_id)
 
 Retrieves a status update for the given transaction id, returned by a transaction_prepare() call. If succesful an array is returned which includes the
 transaction id and status, and information about the account holder (consumer) that requested the transaction.
