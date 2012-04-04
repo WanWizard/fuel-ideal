@@ -512,7 +512,7 @@ class Ideal_Professional
 		$result = '';
 
 		// connect to the server
-		if ($handle = fsockopen($urlparts['scheme'], $urlparts['port'], $errno, $errstr, $timeout))
+		if ($handle = @fsockopen($urlparts['scheme'], $urlparts['port'], $errno, $errstr, $timeout))
 		{
 			// send the HTTP request
 			fputs($handle, 'POST '.$urlparts['path'].' HTTP/1.0'.CRLF);
