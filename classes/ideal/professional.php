@@ -48,7 +48,7 @@ class Ideal_Professional
 		// we need OpenSSL to be available
 		if ( ! defined('OPENSSL_VERSION_NUMBER'))
 		{
-			throw new IdealException('OpenSSL PHP extension is required to use iDEAL professional services');
+			throw new \IdealException('OpenSSL PHP extension is required to use iDEAL professional services');
 		}
 
 		// store the config passed
@@ -100,7 +100,7 @@ class Ideal_Professional
 				// check for reported errors
 				if ($this->get_xml_tag('errorCode', $reply))
 				{
-					throw new IdealProcessException($this->get_xml_tag('errorCode', $reply).' - '.$this->get_xml_tag('errorMessage', $reply).' - '.$this->get_xml_tag('errorDetail', $reply));
+					throw new \IdealProcessException($this->get_xml_tag('errorCode', $reply).' - '.$this->get_xml_tag('errorMessage', $reply).' - '.$this->get_xml_tag('errorDetail', $reply));
 				}
 				else
 				{
@@ -142,7 +142,7 @@ class Ideal_Professional
 			}
 			else
 			{
-				throw new IdealConnectionException('No data received from Issuer request');
+				throw new \IdealConnectionException('No data received from Issuer request');
 			}
 
 		}
@@ -200,7 +200,7 @@ class Ideal_Professional
 			// check for reported errors
 			if ($this->get_xml_tag('errorCode', $reply))
 			{
-				throw new IdealProcessException($this->get_xml_tag('errorCode', $reply).' - '.$this->get_xml_tag('errorMessage', $reply).' - '.$this->get_xml_tag('errorDetail', $reply));
+				throw new \IdealProcessException($this->get_xml_tag('errorCode', $reply).' - '.$this->get_xml_tag('errorMessage', $reply).' - '.$this->get_xml_tag('errorDetail', $reply));
 			}
 			else
 			{
@@ -226,7 +226,7 @@ class Ideal_Professional
 		 }
 		 else
 		 {
-			throw new IdealProcessException('Execute transaction called without a valid prepared transaction available');
+			throw new \IdealProcessException('Execute transaction called without a valid prepared transaction available');
 		 }
 	 }
 
@@ -240,7 +240,7 @@ class Ideal_Professional
 		// check if we have a transaction id
 		if (func_num_args() == 0)
 		{
-			throw new IdealProcessException('No transaction ID specified when requesting a transaction status');
+			throw new \IdealProcessException('No transaction ID specified when requesting a transaction status');
 		}
 
 		// construct the message timestamp
@@ -275,7 +275,7 @@ class Ideal_Professional
 			// check for reported errors
 			if ($this->get_xml_tag('errorCode', $reply))
 			{
-				throw new IdealProcessException($this->get_xml_tag('errorCode', $reply).' - '.$this->get_xml_tag('errorMessage', $reply).' - '.$this->get_xml_tag('errorDetail', $reply));
+				throw new \IdealProcessException($this->get_xml_tag('errorCode', $reply).' - '.$this->get_xml_tag('errorMessage', $reply).' - '.$this->get_xml_tag('errorDetail', $reply));
 			}
 			else
 			{
@@ -296,14 +296,14 @@ class Ideal_Professional
 				$fingerprint = $this->get_xml_tag('fingerprint', $reply);
 				if (strcasecmp($fingerprint, $this->security_get_fingerprint(true)) !== 0)
 				{
-					throw new IdealProcessException('Invalid fingerprint detected in status response message');
+					throw new \IdealProcessException('Invalid fingerprint detected in status response message');
 				}
 
 				// validate the signature of the message
 				$signature = base64_decode($this->get_xml_tag('signatureValue', $reply));
 				if($this->security_verify_signature($message, $signature) == false)
 				{
-					throw new IdealProcessException('Invalid signature detected in status response message');
+					throw new \IdealProcessException('Invalid signature detected in status response message');
 				}
 
 				// make sure the status is uppercase
@@ -334,7 +334,7 @@ class Ideal_Professional
 		}
 		else
 		{
-			throw new IdealException('Invalid amount passed. The amount must be numeric and larger than zero');
+			throw new \IdealException('Invalid amount passed. The amount must be numeric and larger than zero');
 		}
 	}
 
@@ -367,7 +367,7 @@ class Ideal_Professional
 		}
 		else
 		{
-			throw new IdealException('Invalid entrance_code passed. The entrance_code must be a string and maximum 40 characters');
+			throw new \IdealException('Invalid entrance_code passed. The entrance_code must be a string and maximum 40 characters');
 		}
 
 		return $this->config['entrance_code'];
@@ -388,7 +388,7 @@ class Ideal_Professional
 		}
 		else
 		{
-			throw new IdealException('Invalid description passed. The description must be a string and maximum 32 characters');
+			throw new \IdealException('Invalid description passed. The description must be a string and maximum 32 characters');
 		}
 	}
 
@@ -407,7 +407,7 @@ class Ideal_Professional
 		}
 		else
 		{
-			throw new IdealException('Invalid reference passed. The transaction reference must be a string and maximum 16 characters');
+			throw new \IdealException('Invalid reference passed. The transaction reference must be a string and maximum 16 characters');
 		}
 	}
 
@@ -465,11 +465,11 @@ class Ideal_Professional
 		isset($config['entrance_code']) or $config['entrance_code'] = $this->set_entrance_code();
 
 		// check the availability of the keys and certs, make sure the paths are correct
-		foreach(array('private_key', 'private_cert', 'public_cert') as $key)
+		foreach (array('private_key', 'private_cert', 'public_cert') as $key)
 		{
 			if ( ! isset($config['bank']['professional'][$key]))
 			{
-				throw new IdealException('No "'.$key.'" defined in the "'.$config['bank']['name'].'" configuration file');
+				throw new \IdealException('No "'.$key.'" defined in the "'.$config['bank']['name'].'" configuration file');
 			}
 			else
 			{
@@ -480,7 +480,7 @@ class Ideal_Professional
 				// make sure the path is fully qualified and the file exists
 				if ( ! is_file($config['bank']['professional'][$key]))
 				{
-					throw new IdealException('The "'.$key.'" defined in the "'.$config['bank']['name'].'" configuration file can not be found');
+					throw new \IdealException('The "'.$key.'" defined in the "'.$config['bank']['name'].'" configuration file can not be found');
 				}
 			}
 		}
@@ -535,7 +535,7 @@ class Ideal_Professional
 		else
 		{
 			// connection failed
-			throw new IdealConnectionException($url);
+			throw new \IdealConnectionException($url);
 		}
 
 		// return the result
@@ -630,7 +630,7 @@ class Ideal_Professional
 		}
 		catch (\Exception $e)
 		{
-			throw new IdealCertificateException('Can not read the configured '.($public?'public':'private').' certificate');
+			throw new \IdealCertificateException('Can not read the configured '.($public ? 'public' : 'private').' certificate');
 		}
 
 		// validate it by converting the resource back to the certificate
@@ -644,7 +644,7 @@ class Ideal_Professional
 		}
 		else
 		{
-			throw new IdealCertificateException('Invalid '.($public?'public':'private').' certificate detected');
+			throw new \IdealCertificateException('Invalid '.($public ? 'public' : 'private').' certificate detected');
 		}
 
 		return $openssl;
@@ -668,7 +668,7 @@ class Ideal_Professional
 		}
 		catch (\Exception $e)
 		{
-			throw new IdealCertificateException('Can not read the configured private key file');
+			throw new \IdealCertificateException('Can not read the configured private key file');
 		}
 
 		// fetch it using the configured pass phrase
@@ -682,12 +682,12 @@ class Ideal_Professional
 			}
 			else
 			{
-				throw new IdealCertificateException('Error signing the message using the private key');
+				throw new \IdealCertificateException('Error signing the message using the private key');
 			}
 		}
 		else
 		{
-			throw new IdealCertificateException('Invalid PassPhrase for the configured private key');
+			throw new \IdealCertificateException('Invalid PassPhrase for the configured private key');
 		}
 
 		// return the calculated signature
@@ -709,7 +709,7 @@ class Ideal_Professional
 		}
 		catch (\Exception $e)
 		{
-			throw new IdealCertificateException('Can not read the configured public certificate file');
+			throw new \IdealCertificateException('Can not read the configured public certificate file');
 		}
 
 		// fetch it using the configured pass phrase
@@ -721,7 +721,7 @@ class Ideal_Professional
 		else
 		{
 			// failed
-			throw new IdealCertificateException('Can not retrieve the key from the configured public certificate');
+			throw new \IdealCertificateException('Can not retrieve the key from the configured public certificate');
 		}
 
 		return $result;
