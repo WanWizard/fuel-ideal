@@ -10,7 +10,7 @@
  * @link       http://exite.eu
  */
 
-Autoloader::alias_to_namespace('Ideal');
+Autoloader::add_core_namespace('Ideal');
 
 Autoloader::add_classes(array(
 	'Ideal\\Ideal'                             => __DIR__.DS.'classes'.DS.'ideal.php',
