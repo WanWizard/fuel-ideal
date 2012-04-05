@@ -134,7 +134,7 @@ class Ideal_Basic
 		}
 		else
 		{
-			throw new IdealException('Invalid amount passed. The amount must be numeric and larger than zero');
+			throw new \IdealException('Invalid amount passed. The amount must be numeric and larger than zero');
 		}
 	}
 
@@ -153,7 +153,7 @@ class Ideal_Basic
 		}
 		else
 		{
-			throw new IdealException('Invalid description passed. The description must be a string and maximum 32 characters');
+			throw new \IdealException('Invalid description passed. The description must be a string and maximum 32 characters');
 		}
 	}
 
@@ -172,7 +172,7 @@ class Ideal_Basic
 		}
 		else
 		{
-			throw new IdealException('Invalid reference passed. The transaction reference must be a string and maximum 16 characters');
+			throw new \IdealException('Invalid reference passed. The transaction reference must be a string and maximum 16 characters');
 		}
 	}
 

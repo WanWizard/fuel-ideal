@@ -64,7 +64,7 @@ class Ideal
 			$config['bank'] = array_merge(\Config::get($config['bank']), array('name' => $config['bank']));
 
 			// determine the driver to load
-			$driver = '\\Ideal\\Ideal_'.ucfirst($config['service']);
+			$driver = '\\Ideal_'.ucfirst($config['service']);
 
 			// create the instance
 			static::$instance = new $driver($config);
@@ -82,7 +82,7 @@ class Ideal
 		// check the configured bank
 		if ( ! isset($config['bank']))
 		{
-			throw new IdealException('No bank defined in the iDEAL configuration file');
+			throw new \IdealException('No bank defined in the iDEAL configuration file');
 		}
 		else
 		{
@@ -90,13 +90,13 @@ class Ideal
 		}
 		if ( ! in_array($config['bank'], array('rabo', 'abnamro', 'ing', 'simulator')))
 		{
-			throw new IdealException('The "'.$config['bank'].'" bank defined in the iDEAL configuration file is not supported (yet)');
+			throw new \IdealException('The "'.$config['bank'].'" bank defined in the iDEAL configuration file is not supported (yet)');
 		}
 
 		// check the configured service
 		if ( ! isset($config['service']))
 		{
-			throw new IdealException('No service type defined in the iDEAL configuration file');
+			throw new \IdealException('No service type defined in the iDEAL configuration file');
 		}
 		else
 		{
@@ -105,7 +105,7 @@ class Ideal
 
 		if ( ! in_array($config['service'], array('basic', 'professional')))
 		{
-			throw new IdealException('The "'.$config['service'].'" service defined in the iDEAL configuration file is not supported. Use either "basic" or "professional"');
+			throw new \IdealException('The "'.$config['service'].'" service defined in the iDEAL configuration file is not supported. Use either "basic" or "professional"');
 		}
 
 		// return the config
