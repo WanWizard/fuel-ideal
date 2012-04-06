@@ -88,7 +88,7 @@ class Ideal
 		{
 			$config['bank'] = strtolower($config['bank']);
 		}
-		if ( ! in_array($config['bank'], array('rabo', 'abnamro', 'ing', 'simulator')))
+		if ( ! in_array($config['bank'], array('rabobank', 'abnamro', 'ingbank', 'simulator')))
 		{
 			throw new \IdealException('The "'.$config['bank'].'" bank defined in the iDEAL configuration file is not supported (yet)');
 		}

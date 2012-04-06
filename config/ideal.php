@@ -36,7 +36,7 @@ return array(
 	 * The name of the bank you have an iDEAL contract with.
 	 *
 	 * Supported banks are:
-	 * simulator, rabo, ing, amnamro, asn, fortis, friesland, sns and mollie
+	 * simulator, rabobank, ingbank, amnamro, asn, fortis, friesland, sns and mollie
 	 */
 	'bank' => 'simulator',
 
@@ -91,4 +91,12 @@ return array(
 	 */
 	 'error_url' => '',
 
+	/**
+	 * Path to the certificates directory.
+	 *
+	 * When not using public certificates you'd want to copy the certificates
+	 * directory to an other location. This way when you install a package update
+	 * you don't loose your certificates.
+	 */
+	'cert_path' => PKGPATH.'ideal'.DS.'certificates',
 );
