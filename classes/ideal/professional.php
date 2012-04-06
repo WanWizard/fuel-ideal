@@ -646,7 +646,7 @@ class Ideal_Professional
 		{
 			throw new \IdealCertificateException('Invalid '.($public ? 'public' : 'private').' certificate detected');
 		}
-//die($openssl);
+
 		return $openssl;
 	 }
 
