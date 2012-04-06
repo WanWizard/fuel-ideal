@@ -99,16 +99,16 @@ return array(
 		/**
 		 * Your private certificate key
 		 */
-		'private_key'    => 'certificates'.DS.'private'.DS.'private.key',
+		'private_key'    => 'private'.DS.'private.key',
 
 		/**
 		 * Your private certificate (the simulator uses their own private cert!)
 		 */
-		'private_cert'   => 'certificates'.DS.'private'.DS.'private.cer',
+		'private_cert'   => 'private'.DS.'private.cer',
 
 		/**
 		 * Public certificate issued by your iDEAL service provider
 		 */
-		'public_cert'    => 'certificates'.DS.'ingbank'.DS.'ingbank.cer',
+		'public_cert'    => 'ingbank'.DS.'ingbank.cer',
 	),
 );
