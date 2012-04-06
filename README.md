@@ -11,11 +11,7 @@ It also provides a simulator mode which allows you to test your code without nee
 
 # Install
 
-to install this package simply add this source to your package configuration file:
-
-	http://github.com/WanWizard
-
-and then you can simply type in:
+to install this package simply type in:
 
 	php oil package install ideal
 
@@ -27,6 +23,15 @@ configuration file and your banks configuration file to app/config before making
 The public certificates of the supported banks are included in the package. Based on the bank you do business with you will
 have to replace them. You also need to generate your own private key and certificate in case you are going to use the
 professional services interface of the package.
+
+# Using your own certificates
+
+When using your own certificates (which is required when using professional), copy the certificates directory to you own safe location.
+This could for instance be your app folder. Upload your certificates to the `certificates/private` folder and point the `cert_path`
+config setting in `config/ideal.php` to the new location.
+
+The custom certificate and key are names `private.cer` and `private.key`. You can either rename your key and certificate, or change it
+in the corresponding config (`config/[one of the bands].php`).
 
 # Testing
 

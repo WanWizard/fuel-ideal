@@ -75,7 +75,7 @@ class Ideal_Professional
 			$timestamp = gmdate('Y-m-d') . 'T' . gmdate('H:i:s') . '.000Z';
 
 			// calculate the token and token code
-			$message = $this->multiline($timestamp . $this->config['merchant_id'] . $this->config['sub_id']);
+			$message = $timestamp.$this->config['merchant_id'].$this->config['sub_id'];
 
 			// construct the XML message
 			$message = '<?xml version="1.0" encoding="UTF-8" ?>'.LF.
@@ -162,7 +162,7 @@ class Ideal_Professional
 		$timestamp = gmdate('Y-m-d') . 'T' . gmdate('H:i:s') . '.000Z';
 
 		// calculate the token and token code
-		$message = $this->multiline($timestamp.$this->config['issuer'].$this->config['merchant_id'].$this->config['sub_id'].$this->config['return_url'].$this->config['reference'].$this->config['currency'].strtolower($this->config['language']).$this->config['description'].$this->config['entrance_code']);
+		$message = $this->multiline($timestamp.$this->config['issuer'].$this->config['merchant_id'].$this->config['sub_id'].$this->config['return_url'].$this->config['reference'].$this->config['amount'].$this->config['currency'].strtolower($this->config['language']).$this->config['description'].$this->config['entrance_code']);
 
 		// construct the XML message
 		$message = '<?xml version="1.0" encoding="UTF-8" ?>'.LF.
@@ -247,11 +247,11 @@ class Ideal_Professional
 		$timestamp = gmdate('Y-m-d') . 'T' . gmdate('H:i:s') . '.000Z';
 
 		// calculate the token and token code
-		$message = $this->multiline($timestamp.$this->config['merchant_id'].$this->config['sub_id'].$transaction_id);
+		$message = $timestamp.$this->config['merchant_id'].$this->config['sub_id'].$transaction_id;
 
 		// construct the XML message
 		$message = '<?xml version="1.0" encoding="UTF-8" ?>'.LF.
-			'<AcquirerTrxReq xmlns="http://www.idealdesk.com/Message" version="1.1.0">'.LF.
+			'<AcquirerStatusReq xmlns="http://www.idealdesk.com/Message" version="1.1.0">'.LF.
 			'<createDateTimeStamp>'.$this->xml_escape($timestamp).'</createDateTimeStamp>'.LF.
 			'<Merchant>'.
 			'<merchantID>'.$this->xml_escape($this->config['merchant_id']).'</merchantID>'.LF.
@@ -474,13 +474,13 @@ class Ideal_Professional
 			else
 			{
 				// make sure the path is fully qualified
-				is_file($config['bank']['professional'][$key]) or $config['bank']['professional'][$key] = __DIR__.DS.'..'.DS.'..'.DS.$config['bank']['professional'][$key];
+				is_file($config['bank']['professional'][$key]) or $config['bank']['professional'][$key] = rtrim($config['cert_path'], DS).DS.$config['bank']['professional'][$key];
 				$config['bank']['professional'][$key] = realpath($config['bank']['professional'][$key]);
 
 				// make sure the path is fully qualified and the file exists
 				if ( ! is_file($config['bank']['professional'][$key]))
 				{
-					throw new \IdealException('The "'.$key.'" defined in the "'.$config['bank']['name'].'" configuration file can not be found');
+					throw new \IdealException('The "'.$key.'" defined in the "'.$config['bank']['name'].'" configuration file can not be found.');
 				}
 			}
 		}
@@ -646,7 +646,7 @@ class Ideal_Professional
 		{
 			throw new \IdealCertificateException('Invalid '.($public ? 'public' : 'private').' certificate detected');
 		}
-
+//die($openssl);
 		return $openssl;
 	 }
 
@@ -660,7 +660,6 @@ class Ideal_Professional
 	 {
 		// make sure the message format complies to the banks standards
 		$message = $this->multiline($message);
-
 		// read the private key file
 		try
 		{
@@ -670,7 +669,6 @@ class Ideal_Professional
 		{
 			throw new \IdealCertificateException('Can not read the configured private key file');
 		}
-
 		// fetch it using the configured pass phrase
 		if ($private_key = openssl_get_privatekey($private_key, $this->config['bank']['professional']['passphrase']))
 		{
