@@ -109,6 +109,6 @@ return array(
 		/**
 		 * Public certificate issued by your iDEAL service provider
 		 */
-		'public_cert'    => 'ingbank'.DS.'ingbank.cer',
+		'public_cert'    => 'abnamro'.DS.'abnamro.cer',
 	),
 );
